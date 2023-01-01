@@ -11,13 +11,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.cors().and().csrf().disable();
-
-        http.formLogin().permitAll();
-
-        http.authorizeHttpRequests().anyRequest().authenticated();
-
-        http.oauth2Login();
+        http.cors().and().csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login();
 
         return http.build();
     }
